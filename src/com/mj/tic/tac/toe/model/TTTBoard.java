@@ -52,20 +52,92 @@ public class TTTBoard extends Generic2DBoard {
      * (currentRow, currentCol)
      */
     public boolean hasWon(Seed theSeed) {
-        return (cells[currentRow][0].seed == theSeed // 3-in-the-row
-                && cells[currentRow][1].seed == theSeed
-                && cells[currentRow][2].seed == theSeed
-                || cells[0][currentCol].seed == theSeed // 3-in-the-column
-                && cells[1][currentCol].seed == theSeed
-                && cells[2][currentCol].seed == theSeed
-                || currentRow == currentCol // 3-in-the-diagonal
-                && cells[0][0].seed == theSeed
-                && cells[1][1].seed == theSeed
-                && cells[2][2].seed == theSeed
-                || currentRow + currentCol == 2 // 3-in-the-opposite-diagonal
-                && cells[0][2].seed == theSeed
-                && cells[1][1].seed == theSeed
-                && cells[2][0].seed == theSeed);
+        //Condition 1  - Top left
+        if(currentRow - 2 >= 0 && currentCol - 2 >= 0 
+                && cells[currentRow-2][currentCol-2].seed == theSeed 
+                && cells[currentRow-1][currentCol-1].seed == theSeed){
+            return true;
+        }
+    
+        //Condition 2 - Top
+        if(currentRow - 2 >= 0
+                && cells[currentRow-2][currentCol].seed == theSeed 
+                && cells[currentRow-1][currentCol].seed == theSeed){
+            return true;
+        }
+        
+        //Condition 3 - Top Right
+        if(currentRow - 2 >= 0 && currentCol + 2 <= this.cols-1
+                && cells[currentRow-2][currentCol+2].seed == theSeed 
+                && cells[currentRow-1][currentCol+1].seed == theSeed){
+            return true;
+            
+        }
+        
+        //Condition 4 - Right
+        if(currentCol + 2 <= this.cols-1
+                && cells[currentRow][currentCol+1].seed == theSeed 
+                && cells[currentRow][currentCol+2].seed == theSeed){
+            return true;
+            
+        }
+        
+        // Condition 5 - Bottom Right
+        if(currentRow + 2 <= this.rows-1 && currentCol + 2 <= this.cols-1
+                && cells[currentRow+1][currentCol+1].seed == theSeed 
+                && cells[currentRow+2][currentCol+2].seed == theSeed){
+            return true;
+        }
+        
+        // Condition 6 - Bottom
+        if(currentRow + 2 <= this.rows-1 
+                && cells[currentRow+1][currentCol].seed == theSeed 
+                && cells[currentRow+2][currentCol].seed == theSeed){
+            return true;
+        }
+        
+        // Condition 7 - Bottom Left
+        if(currentRow + 2 <= this.rows-1 && currentCol - 2 >= 0
+                && cells[currentRow+1][currentCol-1].seed == theSeed 
+                && cells[currentRow+2][currentCol-2].seed == theSeed){
+            return true;
+        }
+        
+        // Condition 8 - Right
+        if(currentCol - 2 >= 0
+                && cells[currentRow][currentCol-1].seed == theSeed 
+                && cells[currentRow][currentCol-2].seed == theSeed){
+            return true;
+        }
+        
+        //Smaller box
+        // Condition 9 - 3 in the row 
+        if(currentRow - 1 >= 0 && currentRow + 1 <= this.rows-1 
+                && cells[currentRow-1][currentCol].seed == theSeed 
+                && cells[currentRow+1][currentCol].seed == theSeed){
+            return true;
+        }
+        
+        //Condition 10 - 3 in the collumn
+        if(currentCol - 1 >= 0 && currentCol + 1 <= this.cols-1 
+                && cells[currentRow][currentCol-1].seed == theSeed 
+                && cells[currentRow][currentCol+1].seed == theSeed){
+            return true;
+        }
+        
+        // Condition 11 //Diagonal
+        if(currentRow - 1 >= 0 && currentCol - 1 >= 0 &&
+                currentRow + 1 <= this.rows-1 && currentCol + 1 <= this.cols-1){
+            return (
+                cells[currentRow-1][currentCol-1].seed == theSeed 
+                && cells[currentRow+1][currentCol+1].seed == theSeed
+                || 
+                cells[currentRow-1][currentCol+1].seed == theSeed 
+                && cells[currentRow+1][currentCol-1].seed == theSeed);
+            
+        }
+        return false;
+        
     }
 
     /**
